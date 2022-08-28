@@ -1,7 +1,12 @@
 # Client
+```
+npm install --save axios vue-axios
+
 pushd client
 npm run dev -- --host
 popd
+```
+
 
 # Server
 ```
