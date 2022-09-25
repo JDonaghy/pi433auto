@@ -7,9 +7,13 @@
     "preview": "vite preview --port 4173"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "axios": "^0.27.2",
+    "bootstrap": "^5.2.0",
     "vue": "^3.2.37",
-    "vue-axios": "^3.4.1"
+    "vue-3-sidebar": "^0.0.6",
+    "vue-axios": "^3.4.1",
+    "vue-sidebar-menu": "^5.2.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.1",

@@ -1,9 +1,13 @@
 # Import the flask library
-from flask import Flask, request
+from flask import Flask, request, Response, send_file
 from flask_cors import CORS
 import json
 import shutil
 import time
+import subprocess
+
+from shelljob import proc
+
 
 codesFile = "codes.json"
 
@@ -43,3 +47,43 @@ def update():
         return codedefs, 200 
     else:
         return 'Content-Type not supported!', 415
+
+
+@app.route('/stream2')
+def execute():
+    exec_path = "transceiver/receive.py"
+    cmd = [ "bash", "-c", f"python {exec_path}" ]  # -u: don't buffer output
+
+    proc = subprocess.Popen(
+        cmd,
+        stdout=subprocess.PIPE,
+    )
+    def read_process():
+      for line in proc.stdout:
+          yield line
+
+    return Response( read_process(), mimetype= 'text/event-stream' )
+
+
+
+@app.route( '/stream' )
+def stream():
+    exec_path = "transceiver/receive.py"
+    g = proc.Group()
+    p = g.run( [ "bash", "-c", f"python {exec_path}" ] )
+
+    def read_process():
+        while g.is_pending():   
+            lines = g.readlines()
+            print (f"lines {str(lines)}")
+            for proc, line in lines:
+                yield line
+
+    return Response( read_process(), mimetype= 'text/event-stream' )
+
+@app.route('/streampage')
+def get_page():
+    return send_file('streampage.html')
+
+if __name__ == "__main__":
+    app.run(debug=True)
