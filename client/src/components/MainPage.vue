@@ -6,9 +6,10 @@
                 <Sidebar :menuItems="menuItems" @selectitem="selectitem"></Sidebar>
             </div>
             <div class="col py-3" v-if="menuItems.length > 0">
-                <SetSettings v-if="this.viewtype === 'set'" :picodes="picodes" :setname="menuItems[currentSetIndex].text"/>
-                <PiCodes v-else :picodes="picodes" :setname="menuItems[currentSetIndex].text" :currentButtonIndex="currentButtonIndex" />
-                <LearnCodes/>
+                <SetSettings v-if="this.viewtype === 'set'" :picodes="picodes"
+                    :setname="menuItems[currentSetIndex].text" />
+                <PiCodes v-else :picodes="picodes" :setname="menuItems[currentSetIndex].text"
+                    :currentButtonIndex="currentButtonIndex" v-on:newcode="setnewcode"/>
             </div>
 
         </div>
@@ -21,14 +22,12 @@
 import PiCodes from './PiCodes.vue'
 import SetSettings from './SetSettings.vue'
 import Sidebar from './Sidebar.vue'
-import LearnCodes from './LearnCodes.vue'
 
 export default {
     components: {
         Sidebar,
         PiCodes,
-        SetSettings,
-        LearnCodes,
+        SetSettings
     },
     data() {
         return {
@@ -65,6 +64,11 @@ export default {
         }
     },
     methods: {
+        setnewcode(codeinfo) {
+            debugger
+            const setname = this.menuItems[this.currentSetIndex].text
+            this.picodes.sets[setname].buttons[this.currentButtonIndex][codeinfo.bname] = codeinfo.code
+        },
         async getData() {
             try {
                 this.axios.get(this.serverUrl).then((response) => {
@@ -74,7 +78,7 @@ export default {
                     for (const setprop in this.picodes.sets) {
                         const childItems = []
                         for (let i = 0; i < this.picodes.sets[setprop].buttons.length; i++) {
-                            childItems.push({ 
+                            childItems.push({
                                 text: "button " + (i + 1), type: "button", index: i, parentIndex: this.menuItems.length, selected: false
                             })
                         }

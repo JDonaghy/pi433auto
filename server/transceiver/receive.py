@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO, format='%(message)s')
 parser = argparse.ArgumentParser(description='Receives a decimal code via a 433/315MHz GPIO device')
 parser.add_argument('-g', dest='gpio', type=int, default=27,
                     help="GPIO pin (Default: 27)")
-parser.add_argument('-s', dest='seconds', type=int, default=30,
+parser.add_argument('-s', dest='seconds', type=int, default=10,
                     help="Number of seconds to listen for")
 args = parser.parse_args()
 

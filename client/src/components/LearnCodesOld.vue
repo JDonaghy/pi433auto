@@ -1,11 +1,14 @@
 <template>
-    Codes:
-    <div v-for="row in rows">
-        {{row}}
+    <div>
+        Codes:
+        <div v-for="row in rows">
+            {{row}}
+        </div>
     </div>
 </template>
 
 <script>
+
 export default {
     data() {
         return {
