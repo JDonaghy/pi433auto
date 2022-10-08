@@ -9,7 +9,7 @@
                 <SetSettings v-if="this.viewtype === 'set'" :picodes="picodes"
                     :setname="menuItems[currentSetIndex].text" />
                 <PiCodes v-else :picodes="picodes" :setname="menuItems[currentSetIndex].text"
-                    :currentButtonIndex="currentButtonIndex" v-on:newcode="setnewcode"/>
+                    :currentButtonIndex="currentButtonIndex" @newcode="setnewcode"/>
             </div>
 
         </div>
@@ -65,7 +65,6 @@ export default {
     },
     methods: {
         setnewcode(codeinfo) {
-            debugger
             const setname = this.menuItems[this.currentSetIndex].text
             this.picodes.sets[setname].buttons[this.currentButtonIndex][codeinfo.bname] = codeinfo.code
         },

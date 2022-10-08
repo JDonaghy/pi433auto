@@ -46,6 +46,7 @@ function findBestCode(rows) {
 }
 
 export default {
+
   data() {
     return {
       rows: [],

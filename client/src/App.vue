@@ -2,6 +2,9 @@
 <template>
   <div class="app">
     <MainPage/>
+
+    <!-- Add element to support popups -->
+    <DialogsWrapper /> 
   </div>
 </template>
 
