@@ -81,6 +81,18 @@ def stream():
 
     return Response( read_process(), mimetype= 'text/event-stream' )
 
+
+@app.route( '/firecode' )
+def firecode():
+    exec_path = "transceiver/send.py"
+    code = request.args.get('code')
+    print (f"CODE: {code}")
+    g = proc.Group()
+    p = g.run( [ "bash", "-c", f"python {exec_path} -c {code}" ] )
+
+    return "OK", 200
+
+
 @app.route('/streampage')
 def get_page():
     return send_file('streampage.html')
